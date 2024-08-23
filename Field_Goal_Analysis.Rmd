@@ -3,7 +3,7 @@ title: "NFL Field Goal Analysis"
 author: "Tyler Pollard"
 date: "2024-08-22"
 output:
-  html_document:
+  github_document:
     toc: true
     toc_depth: 3
 ---
