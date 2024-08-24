@@ -26,20 +26,20 @@ team is losing by 0, 1, 2, or 3 points before the kick), otherwise it is
 regular. Let $Z \in \{ < 30, 30 - 39, 40 - 49, \geq 50 \}$ be the binned
 distance of the field goal attempt, in yards.
 
-<div id="xjfdcxgcui" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xjfdcxgcui table {
+<div id="uzvsahtlzn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#uzvsahtlzn table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#xjfdcxgcui thead, #xjfdcxgcui tbody, #xjfdcxgcui tfoot, #xjfdcxgcui tr, #xjfdcxgcui td, #xjfdcxgcui th {
+&#10;#uzvsahtlzn thead, #uzvsahtlzn tbody, #uzvsahtlzn tfoot, #uzvsahtlzn tr, #uzvsahtlzn td, #uzvsahtlzn th {
   border-style: none;
 }
-&#10;#xjfdcxgcui p {
+&#10;#uzvsahtlzn p {
   margin: 0;
   padding: 0;
 }
-&#10;#xjfdcxgcui .gt_table {
+&#10;#uzvsahtlzn .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -64,11 +64,11 @@ distance of the field goal attempt, in yards.
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#xjfdcxgcui .gt_caption {
+&#10;#uzvsahtlzn .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#xjfdcxgcui .gt_title {
+&#10;#uzvsahtlzn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -79,7 +79,7 @@ distance of the field goal attempt, in yards.
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#xjfdcxgcui .gt_subtitle {
+&#10;#uzvsahtlzn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -90,7 +90,7 @@ distance of the field goal attempt, in yards.
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#xjfdcxgcui .gt_heading {
+&#10;#uzvsahtlzn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -101,12 +101,12 @@ distance of the field goal attempt, in yards.
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#xjfdcxgcui .gt_bottom_border {
+&#10;#uzvsahtlzn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#xjfdcxgcui .gt_col_headings {
+&#10;#uzvsahtlzn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -120,7 +120,7 @@ distance of the field goal attempt, in yards.
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#xjfdcxgcui .gt_col_heading {
+&#10;#uzvsahtlzn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -139,7 +139,7 @@ distance of the field goal attempt, in yards.
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#xjfdcxgcui .gt_column_spanner_outer {
+&#10;#uzvsahtlzn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -150,13 +150,13 @@ distance of the field goal attempt, in yards.
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#xjfdcxgcui .gt_column_spanner_outer:first-child {
+&#10;#uzvsahtlzn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#xjfdcxgcui .gt_column_spanner_outer:last-child {
+&#10;#uzvsahtlzn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#xjfdcxgcui .gt_column_spanner {
+&#10;#uzvsahtlzn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -167,10 +167,10 @@ distance of the field goal attempt, in yards.
   display: inline-block;
   width: 100%;
 }
-&#10;#xjfdcxgcui .gt_spanner_row {
+&#10;#uzvsahtlzn .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#xjfdcxgcui .gt_group_heading {
+&#10;#uzvsahtlzn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -195,7 +195,7 @@ distance of the field goal attempt, in yards.
   vertical-align: middle;
   text-align: left;
 }
-&#10;#xjfdcxgcui .gt_empty_group_heading {
+&#10;#uzvsahtlzn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -209,13 +209,13 @@ distance of the field goal attempt, in yards.
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#xjfdcxgcui .gt_from_md > :first-child {
+&#10;#uzvsahtlzn .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#xjfdcxgcui .gt_from_md > :last-child {
+&#10;#uzvsahtlzn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#xjfdcxgcui .gt_row {
+&#10;#uzvsahtlzn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -233,7 +233,7 @@ distance of the field goal attempt, in yards.
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#xjfdcxgcui .gt_stub {
+&#10;#uzvsahtlzn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -245,7 +245,7 @@ distance of the field goal attempt, in yards.
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#xjfdcxgcui .gt_stub_row_group {
+&#10;#uzvsahtlzn .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -258,13 +258,13 @@ distance of the field goal attempt, in yards.
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#xjfdcxgcui .gt_row_group_first td {
+&#10;#uzvsahtlzn .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#xjfdcxgcui .gt_row_group_first th {
+&#10;#uzvsahtlzn .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#xjfdcxgcui .gt_summary_row {
+&#10;#uzvsahtlzn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -273,14 +273,14 @@ distance of the field goal attempt, in yards.
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#xjfdcxgcui .gt_first_summary_row {
+&#10;#uzvsahtlzn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#xjfdcxgcui .gt_first_summary_row.thick {
+&#10;#uzvsahtlzn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#xjfdcxgcui .gt_last_summary_row {
+&#10;#uzvsahtlzn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -289,7 +289,7 @@ distance of the field goal attempt, in yards.
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#xjfdcxgcui .gt_grand_summary_row {
+&#10;#uzvsahtlzn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -298,7 +298,7 @@ distance of the field goal attempt, in yards.
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#xjfdcxgcui .gt_first_grand_summary_row {
+&#10;#uzvsahtlzn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -307,7 +307,7 @@ distance of the field goal attempt, in yards.
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#xjfdcxgcui .gt_last_grand_summary_row_top {
+&#10;#uzvsahtlzn .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -316,10 +316,10 @@ distance of the field goal attempt, in yards.
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#xjfdcxgcui .gt_striped {
+&#10;#uzvsahtlzn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#xjfdcxgcui .gt_table_body {
+&#10;#uzvsahtlzn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -327,7 +327,7 @@ distance of the field goal attempt, in yards.
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#xjfdcxgcui .gt_footnotes {
+&#10;#uzvsahtlzn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -340,7 +340,7 @@ distance of the field goal attempt, in yards.
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#xjfdcxgcui .gt_footnote {
+&#10;#uzvsahtlzn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -348,7 +348,7 @@ distance of the field goal attempt, in yards.
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#xjfdcxgcui .gt_sourcenotes {
+&#10;#uzvsahtlzn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -361,57 +361,57 @@ distance of the field goal attempt, in yards.
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#xjfdcxgcui .gt_sourcenote {
+&#10;#uzvsahtlzn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#xjfdcxgcui .gt_left {
+&#10;#uzvsahtlzn .gt_left {
   text-align: left;
 }
-&#10;#xjfdcxgcui .gt_center {
+&#10;#uzvsahtlzn .gt_center {
   text-align: center;
 }
-&#10;#xjfdcxgcui .gt_right {
+&#10;#uzvsahtlzn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#xjfdcxgcui .gt_font_normal {
+&#10;#uzvsahtlzn .gt_font_normal {
   font-weight: normal;
 }
-&#10;#xjfdcxgcui .gt_font_bold {
+&#10;#uzvsahtlzn .gt_font_bold {
   font-weight: bold;
 }
-&#10;#xjfdcxgcui .gt_font_italic {
+&#10;#uzvsahtlzn .gt_font_italic {
   font-style: italic;
 }
-&#10;#xjfdcxgcui .gt_super {
+&#10;#uzvsahtlzn .gt_super {
   font-size: 65%;
 }
-&#10;#xjfdcxgcui .gt_footnote_marks {
+&#10;#uzvsahtlzn .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#xjfdcxgcui .gt_asterisk {
+&#10;#uzvsahtlzn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#xjfdcxgcui .gt_indent_1 {
+&#10;#uzvsahtlzn .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#xjfdcxgcui .gt_indent_2 {
+&#10;#uzvsahtlzn .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#xjfdcxgcui .gt_indent_3 {
+&#10;#uzvsahtlzn .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#xjfdcxgcui .gt_indent_4 {
+&#10;#uzvsahtlzn .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#xjfdcxgcui .gt_indent_5 {
+&#10;#uzvsahtlzn .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -513,7 +513,7 @@ Therefore, $\theta|Y \sim Beta(Y + a, n - Y + b)$.
 A plot of the posterior distribution for probability of making a field
 goal with the prior $\theta \sim Beta(1,1)$ is plotted below.
 
-<img src="README_files/figure-gfm/Posterior Plot-1.png" width="60%" height="50%" style="display: block; margin: auto;" />
+<img src="Field_Goal_Analysis_files/figure-gfm/Posterior Plot-1.png" width="60%" height="50%" style="display: block; margin: auto;" />
 
 Various values of the hyperparameters $a$ and $b$ for the prior
 distribution were used to analyze the sensitivity of the posterior to
@@ -524,20 +524,20 @@ little variation in the posterior for each prior, therefore, the
 posterior is not sensitive to the prior due to the large sample size of
 field goal attempts.
 
-<div id="kjgdlblyzf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#kjgdlblyzf table {
+<div id="emaxiemytm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#emaxiemytm table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#kjgdlblyzf thead, #kjgdlblyzf tbody, #kjgdlblyzf tfoot, #kjgdlblyzf tr, #kjgdlblyzf td, #kjgdlblyzf th {
+&#10;#emaxiemytm thead, #emaxiemytm tbody, #emaxiemytm tfoot, #emaxiemytm tr, #emaxiemytm td, #emaxiemytm th {
   border-style: none;
 }
-&#10;#kjgdlblyzf p {
+&#10;#emaxiemytm p {
   margin: 0;
   padding: 0;
 }
-&#10;#kjgdlblyzf .gt_table {
+&#10;#emaxiemytm .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -562,11 +562,11 @@ field goal attempts.
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#kjgdlblyzf .gt_caption {
+&#10;#emaxiemytm .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#kjgdlblyzf .gt_title {
+&#10;#emaxiemytm .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -577,7 +577,7 @@ field goal attempts.
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#kjgdlblyzf .gt_subtitle {
+&#10;#emaxiemytm .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -588,7 +588,7 @@ field goal attempts.
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#kjgdlblyzf .gt_heading {
+&#10;#emaxiemytm .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -599,12 +599,12 @@ field goal attempts.
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#kjgdlblyzf .gt_bottom_border {
+&#10;#emaxiemytm .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#kjgdlblyzf .gt_col_headings {
+&#10;#emaxiemytm .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -618,7 +618,7 @@ field goal attempts.
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#kjgdlblyzf .gt_col_heading {
+&#10;#emaxiemytm .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -637,7 +637,7 @@ field goal attempts.
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#kjgdlblyzf .gt_column_spanner_outer {
+&#10;#emaxiemytm .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -648,13 +648,13 @@ field goal attempts.
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#kjgdlblyzf .gt_column_spanner_outer:first-child {
+&#10;#emaxiemytm .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#kjgdlblyzf .gt_column_spanner_outer:last-child {
+&#10;#emaxiemytm .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#kjgdlblyzf .gt_column_spanner {
+&#10;#emaxiemytm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -665,10 +665,10 @@ field goal attempts.
   display: inline-block;
   width: 100%;
 }
-&#10;#kjgdlblyzf .gt_spanner_row {
+&#10;#emaxiemytm .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#kjgdlblyzf .gt_group_heading {
+&#10;#emaxiemytm .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -693,7 +693,7 @@ field goal attempts.
   vertical-align: middle;
   text-align: left;
 }
-&#10;#kjgdlblyzf .gt_empty_group_heading {
+&#10;#emaxiemytm .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -707,13 +707,13 @@ field goal attempts.
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#kjgdlblyzf .gt_from_md > :first-child {
+&#10;#emaxiemytm .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#kjgdlblyzf .gt_from_md > :last-child {
+&#10;#emaxiemytm .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#kjgdlblyzf .gt_row {
+&#10;#emaxiemytm .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -731,7 +731,7 @@ field goal attempts.
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#kjgdlblyzf .gt_stub {
+&#10;#emaxiemytm .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -743,7 +743,7 @@ field goal attempts.
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#kjgdlblyzf .gt_stub_row_group {
+&#10;#emaxiemytm .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -756,13 +756,13 @@ field goal attempts.
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#kjgdlblyzf .gt_row_group_first td {
+&#10;#emaxiemytm .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#kjgdlblyzf .gt_row_group_first th {
+&#10;#emaxiemytm .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#kjgdlblyzf .gt_summary_row {
+&#10;#emaxiemytm .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -771,14 +771,14 @@ field goal attempts.
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#kjgdlblyzf .gt_first_summary_row {
+&#10;#emaxiemytm .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#kjgdlblyzf .gt_first_summary_row.thick {
+&#10;#emaxiemytm .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#kjgdlblyzf .gt_last_summary_row {
+&#10;#emaxiemytm .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -787,7 +787,7 @@ field goal attempts.
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#kjgdlblyzf .gt_grand_summary_row {
+&#10;#emaxiemytm .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -796,7 +796,7 @@ field goal attempts.
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#kjgdlblyzf .gt_first_grand_summary_row {
+&#10;#emaxiemytm .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -805,7 +805,7 @@ field goal attempts.
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#kjgdlblyzf .gt_last_grand_summary_row_top {
+&#10;#emaxiemytm .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -814,10 +814,10 @@ field goal attempts.
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#kjgdlblyzf .gt_striped {
+&#10;#emaxiemytm .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#kjgdlblyzf .gt_table_body {
+&#10;#emaxiemytm .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -825,7 +825,7 @@ field goal attempts.
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#kjgdlblyzf .gt_footnotes {
+&#10;#emaxiemytm .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -838,7 +838,7 @@ field goal attempts.
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#kjgdlblyzf .gt_footnote {
+&#10;#emaxiemytm .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -846,7 +846,7 @@ field goal attempts.
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#kjgdlblyzf .gt_sourcenotes {
+&#10;#emaxiemytm .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -859,57 +859,57 @@ field goal attempts.
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#kjgdlblyzf .gt_sourcenote {
+&#10;#emaxiemytm .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#kjgdlblyzf .gt_left {
+&#10;#emaxiemytm .gt_left {
   text-align: left;
 }
-&#10;#kjgdlblyzf .gt_center {
+&#10;#emaxiemytm .gt_center {
   text-align: center;
 }
-&#10;#kjgdlblyzf .gt_right {
+&#10;#emaxiemytm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#kjgdlblyzf .gt_font_normal {
+&#10;#emaxiemytm .gt_font_normal {
   font-weight: normal;
 }
-&#10;#kjgdlblyzf .gt_font_bold {
+&#10;#emaxiemytm .gt_font_bold {
   font-weight: bold;
 }
-&#10;#kjgdlblyzf .gt_font_italic {
+&#10;#emaxiemytm .gt_font_italic {
   font-style: italic;
 }
-&#10;#kjgdlblyzf .gt_super {
+&#10;#emaxiemytm .gt_super {
   font-size: 65%;
 }
-&#10;#kjgdlblyzf .gt_footnote_marks {
+&#10;#emaxiemytm .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#kjgdlblyzf .gt_asterisk {
+&#10;#emaxiemytm .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#kjgdlblyzf .gt_indent_1 {
+&#10;#emaxiemytm .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#kjgdlblyzf .gt_indent_2 {
+&#10;#emaxiemytm .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#kjgdlblyzf .gt_indent_3 {
+&#10;#emaxiemytm .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#kjgdlblyzf .gt_indent_4 {
+&#10;#emaxiemytm .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#kjgdlblyzf .gt_indent_5 {
+&#10;#emaxiemytm .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -972,7 +972,7 @@ $Y = Y_{obs}$ with very small variance when considering all possible
 values of $Y$ which is closely representative of the observed data. The
 likelihood is appropriate.
 
-<img src="README_files/figure-gfm/Likelihood Plot-1.png" width="60%" height="50%" style="display: block; margin: auto;" />
+<img src="Field_Goal_Analysis_files/figure-gfm/Likelihood Plot-1.png" width="60%" height="50%" style="display: block; margin: auto;" />
 
 # Clutch Field Goal Analysis
 
