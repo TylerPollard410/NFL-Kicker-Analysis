@@ -4,4 +4,4 @@
 
 library(rmarkdown)
 
-render(input = "Field_Goal_Analysis.Rmd", output_format = "github_document", output_file = "README.md")
+render(input = "Field_Goal_Analysis.Rmd", output_file = "README")

@@ -5,10 +5,15 @@ date: "2024-08-22"
 header-includes:
   - \usepackage{asmath}
 output:
+  html_document:
+    toc: true
+    toc_depth: 3
   github_document:
     toc: true
     toc_depth: 3
 ---
+
+The following study will outline a Bayesian analysis of NFL field goal data since 1999.
 
 ```{r setup, echo = FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
@@ -30,7 +35,7 @@ library(tidyverse)
 
 # Data
 
-The following study will outline a Bayesian analysis of NFL field goal data since 1999. The data is from the `nflreadr` package as part of the `nflverse`. Let $Y \in \{0, 1, 2, ..., n \}$ be the number of field goals made in $n$ field goal attempts. Let $X \in \{Regular, Clutch\}$ be the situational type of kick. A clutch kick is defined as any field goal attempt where the kicking team has the opportunity to either tie or put their team in the lead with a successful field goal (ie. kicking team is losing by 0, 1, 2, or 3 points before the kick), otherwise it is regular. Let $Z \in \{ < 30, 30 - 39, 40 - 49, \geq 50 \}$ be the binned distance of the field goal attempt, in yards.
+The data is from the `nflreadr` package as part of the `nflverse`. Let $Y \in \{0, 1, 2, ..., n \}$ be the number of field goals made in $n$ field goal attempts. Let $X \in \{Regular, Clutch\}$ be the situational type of kick. A clutch kick is defined as any field goal attempt where the kicking team has the opportunity to either tie or put their team in the lead with a successful field goal (ie. kicking team is losing by 0, 1, 2, or 3 points before the kick), otherwise it is regular. Let $Z \in \{ < 30, 30 - 39, 40 - 49, \geq 50 \}$ be the binned distance of the field goal attempt, in yards.
 
 ```{r Load play-by-play data}
 ## Load Data ----
