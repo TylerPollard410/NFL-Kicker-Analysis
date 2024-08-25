@@ -6,12 +6,26 @@ Tyler Pollard
 <!-- MathJax -->
 <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
+<!-- inline config -->
 <script>
   MathJax = {
     tex: {
-      inlineMath: [['$', '$']]
-    }
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      macros: {
+      	RR: "{\\bf R}",
+      	bold: ["{\\bf #1}", 1],
+        indep: "{\\perp \\!\\!\\! \\perp}",
+    	}
+    },
+    svg: {
+    fontCache: 'global'
+  	},
   };
+</script>
+
+<!-- load MathJax -->
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 </script>
 
 - [Data](#data)
