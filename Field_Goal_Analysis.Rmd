@@ -248,7 +248,7 @@ FGdataTableOut <- FGdataTable |>
   as_raw_html()
 
 #Counts of NFL field goals made and attempted since 1999
-#FGdataTableOut
+FGdataTableOut
 ```
 
 # Aggregated Field Goal Analysis
@@ -368,8 +368,9 @@ posteriorSumTable <- posteriorSum |>
   ) |>
   tab_options(
     table.align = "center"
-  )
-#posteriorSumTable
+  )|>
+  as_raw_html()
+posteriorSumTable
 ```
 
 # Likelihood Verification
@@ -513,7 +514,8 @@ binnedDistProbsTable <- binnedDistProbs |>
   ) |>
   tab_options(
     table.align = "center"
-  )
-#binnedDistProbsTable
+  )|>
+  as_raw_html()
+binnedDistProbsTable
 ```
 
