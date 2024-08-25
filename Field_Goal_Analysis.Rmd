@@ -33,7 +33,7 @@ library(tidyverse)
 
 # Data
 
-The data is from the `nflreadr` package as part of the `nflverse`. Let $Y \in \{0, 1, 2, ..., n \}$ be the number of field goals made in $n$ field goal attempts. Let $X \in \{Regular, Clutch\}$ be the situational type of kick. A clutch kick is defined as any field goal attempt where the kicking team has the opportunity to either tie or put their team in the lead with a successful field goal (ie. kicking team is losing by 0, 1, 2, or 3 points before the kick), otherwise it is regular. Let $`Z \in \{ < 30, 30 - 39, 40 - 49, \geq 50 \}`$ be the binned distance of the field goal attempt, in yards.
+The data is from the `nflreadr` package as part of the `nflverse`. Let $Y \in \{0, 1, 2, ..., n \}$ be the number of field goals made in $n$ field goal attempts. Let $X \in \{Regular, Clutch\}$ be the situational type of kick. A clutch kick is defined as any field goal attempt where the kicking team has the opportunity to either tie or put their team in the lead with a successful field goal (ie. kicking team is losing by 0, 1, 2, or 3 points before the kick), otherwise it is regular. Let $Z \in \{ < 30, 30 - 39, 40 - 49, \geq 50 \}$  be the binned distance of the field goal attempt, in yards.
 
 ```{r Load play-by-play data}
 ## Load Data ----
@@ -256,12 +256,14 @@ FGdataTableOut
 
 We will begin with aggregating the data over the type of field goal and distance. The data $Y$ is the discrete sum of $n$ independent Bernoulli trials (0 = Miss, 1 = Make) each with success/make probability $\theta$. Therefore, the likelihood $Y|\theta$ then follows a binomial distribution with $Y|\theta \sim Binomial(n, \theta)$ and $n = 24571$ attempts. A conjugate prior for a binomial likelihood is the Beta distribution, so we select the prior $\theta \sim Beta(a, b)$ with $a=b=1$ for an uninformative prior. The posterior distribution of $\theta|Y$ can be derived by
 
-$$ \begin{aligned}
+$$
+\begin{aligned}
 p(\theta|Y) = \frac{f(Y|\theta)\pi(\theta)}{m(Y)} &\propto f(Y|\theta)\pi(\theta) \\
 p(\theta|Y)  &\propto \left[{n \choose y}\theta^{y}(1-\theta)^{n-y}\right] \left[\frac{\Gamma(a+b)}{\Gamma(a) \Gamma(b)} \theta^{a-1} (1 - \theta)^{b-1} \right] \\
 p(\theta|Y) &\propto [\theta^{Y}(1-\theta)^{n-Y}][\theta^{a-1} (1 - \theta)^{b-1}] = \theta^{(Y + a) - 1}(1-\theta)^{(n - Y + b) - 1} \\
 p(\theta|Y) &\propto \theta^{A-1}(1- \theta)^{B-1} \text{ , where } A = Y + a, B = n - Y + b \\
-\end{aligned}$$
+\end{aligned}
+$$
 
 \noindent Therefore, $\theta|Y \sim Beta(Y + a, n - Y + b)$.
 
