@@ -6,8 +6,9 @@ header-includes:
   - \usepackage{amsmath}
 output:  
   github_document:
-   toc: true
-   toc_depth: 3
+    html_preview: false
+    toc: true
+    toc_depth: 3
 ---
 
 The following study will outline a Bayesian analysis of NFL field goal data since 1999.
