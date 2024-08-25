@@ -3,7 +3,7 @@ title: "NFL Field Goal Analysis"
 author: "Tyler Pollard"
 date: "2024-08-22"
 header-includes:
-  - \usepackage{asmath}
+  - \usepackage{amsmath}
 output:  
   github_document:
    toc: true
