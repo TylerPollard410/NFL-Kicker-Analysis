@@ -111,14 +111,14 @@ distribution, so we select the prior $\theta \sim Beta(a, b)$ with
 $a=b=1$ for an uninformative prior. The posterior distribution of
 $\theta|Y$ can be derived by
 
-$$
+``` math
 \begin{aligned}
 p(\theta|Y) = \frac{f(Y|\theta)\pi(\theta)}{m(Y)} &\propto f(Y|\theta)\pi(\theta) \\
 p(\theta|Y)  &\propto \left[{n \choose y}\theta^{y}(1-\theta)^{n-y}\right] \left[\frac{\Gamma(a+b)}{\Gamma(a) \Gamma(b)} \theta^{a-1} (1 - \theta)^{b-1} \right] \\
 p(\theta|Y) &\propto [\theta^{Y}(1-\theta)^{n-Y}][\theta^{a-1} (1 - \theta)^{b-1}] = \theta^{(Y + a) - 1}(1-\theta)^{(n - Y + b) - 1} \\
 p(\theta|Y) &\propto \theta^{A-1}(1- \theta)^{B-1} \text{ , where } A = Y + a, B = n - Y + b \\
 \end{aligned}
-$$
+```
 
 Therefore, $\theta|Y \sim Beta(Y + a, n - Y + b)$.
 

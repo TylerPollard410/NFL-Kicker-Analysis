@@ -567,19 +567,12 @@ attempts. A conjugate prior for a binomial likelihood is the Beta
 distribution, so we select the prior <span class="math inline">\(\theta
 \sim Beta(a, b)\)</span> with <span class="math inline">\(a=b=1\)</span>
 for an uninformative prior. The posterior distribution of <span class="math inline">\(\theta|Y\)</span> can be derived by</p>
-<p><span class="math display">\[
-\begin{aligned}
-p(\theta|Y) = \frac{f(Y|\theta)\pi(\theta)}{m(Y)} &amp;\propto
-f(Y|\theta)\pi(\theta) \\
-p(\theta|Y)  &amp;\propto \left[{n \choose
-y}\theta^{y}(1-\theta)^{n-y}\right] \left[\frac{\Gamma(a+b)}{\Gamma(a)
-\Gamma(b)} \theta^{a-1} (1 - \theta)^{b-1} \right] \\
-p(\theta|Y) &amp;\propto [\theta^{Y}(1-\theta)^{n-Y}][\theta^{a-1} (1 -
-\theta)^{b-1}] = \theta^{(Y + a) - 1}(1-\theta)^{(n - Y + b) - 1} \\
-p(\theta|Y) &amp;\propto \theta^{A-1}(1- \theta)^{B-1} \text{ , where }
-A = Y + a, B = n - Y + b \\
-\end{aligned}
-\]</span></p>
+<pre class="math"><code>\begin{aligned}
+p(\theta|Y) = \frac{f(Y|\theta)\pi(\theta)}{m(Y)} &amp;\propto f(Y|\theta)\pi(\theta) \\
+p(\theta|Y)  &amp;\propto \left[{n \choose y}\theta^{y}(1-\theta)^{n-y}\right] \left[\frac{\Gamma(a+b)}{\Gamma(a) \Gamma(b)} \theta^{a-1} (1 - \theta)^{b-1} \right] \\
+p(\theta|Y) &amp;\propto [\theta^{Y}(1-\theta)^{n-Y}][\theta^{a-1} (1 - \theta)^{b-1}] = \theta^{(Y + a) - 1}(1-\theta)^{(n - Y + b) - 1} \\
+p(\theta|Y) &amp;\propto \theta^{A-1}(1- \theta)^{B-1} \text{ , where } A = Y + a, B = n - Y + b \\
+\end{aligned}</code></pre>
 <p>Therefore, <span class="math inline">\(\theta|Y \sim Beta(Y + a, n -
 Y + b)\)</span>.</p>
 </div>
