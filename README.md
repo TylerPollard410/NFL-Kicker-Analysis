@@ -3,7 +3,8 @@ NFL Field Goal Analysis
 Tyler Pollard
 2024-08-22
 
-
+<!-- MathJax -->
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 - [Data](#data)
 - [Aggregated Field Goal Analysis](#aggregated-field-goal-analysis)
