@@ -1,4 +1,4 @@
 theme: jekyll-theme-slate
 
-markdown: GFM
+markdown: kramdown
 mathjax: true
