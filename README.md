@@ -25,8 +25,8 @@ type of kick. A clutch kick is defined as any field goal attempt where
 the kicking team has the opportunity to either tie or put their team in
 the lead with a successful field goal (ie. kicking team is losing by 0,
 1, 2, or 3 points before the kick), otherwise it is regular. Let
-$Z \in \{ < 30, 30 - 39, 40 - 49, \geq 50 \}$ be the binned distance of
-the field goal attempt, in yards.
+$`Z \in \{ < 30, 30 - 39, 40 - 49, \geq 50 \}`$ be the binned distance
+of the field goal attempt, in yards.
 
 <div id="wvceamuiii" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
   &#10;  <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false" style="-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'; display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3;" bgcolor="#FFFFFF">
@@ -111,14 +111,12 @@ distribution, so we select the prior $\theta \sim Beta(a, b)$ with
 $a=b=1$ for an uninformative prior. The posterior distribution of
 $\theta|Y$ can be derived by
 
-``` math
-\begin{aligned}
+$$ \begin{aligned}
 p(\theta|Y) = \frac{f(Y|\theta)\pi(\theta)}{m(Y)} &\propto f(Y|\theta)\pi(\theta) \\
 p(\theta|Y)  &\propto \left[{n \choose y}\theta^{y}(1-\theta)^{n-y}\right] \left[\frac{\Gamma(a+b)}{\Gamma(a) \Gamma(b)} \theta^{a-1} (1 - \theta)^{b-1} \right] \\
 p(\theta|Y) &\propto [\theta^{Y}(1-\theta)^{n-Y}][\theta^{a-1} (1 - \theta)^{b-1}] = \theta^{(Y + a) - 1}(1-\theta)^{(n - Y + b) - 1} \\
 p(\theta|Y) &\propto \theta^{A-1}(1- \theta)^{B-1} \text{ , where } A = Y + a, B = n - Y + b \\
-\end{aligned}
-```
+\end{aligned}$$
 
 Therefore, $\theta|Y \sim Beta(Y + a, n - Y + b)$.
 
