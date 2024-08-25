@@ -6,6 +6,14 @@ Tyler Pollard
 <!-- MathJax -->
 <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$']]
+    }
+  };
+</script>
+
 - [Data](#data)
 - [Aggregated Field Goal Analysis](#aggregated-field-goal-analysis)
 - [Posterior Distribution Plot and Prior Sensitivity
