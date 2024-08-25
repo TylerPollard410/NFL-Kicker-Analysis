@@ -4,10 +4,10 @@ author: "Tyler Pollard"
 date: "2024-08-22"
 header-includes:
   - \usepackage{asmath}
-output:
+output:  
   github_document:
-    toc: true
-    toc_depth: 3
+   toc: true
+   toc_depth: 3
 ---
 
 The following study will outline a Bayesian analysis of NFL field goal data since 1999.
@@ -241,10 +241,14 @@ FGdataTableOut <- FGdataTable |>
         rows = binned_kick_distance == "All Distances"
       )
     )
-  )
+  ) |>
+  tab_options(
+    table.align = "center"
+  ) |>
+  as_raw_html()
 
 #Counts of NFL field goals made and attempted since 1999
-FGdataTableOut
+#FGdataTableOut
 ```
 
 # Aggregated Field Goal Analysis
@@ -328,7 +332,7 @@ Various values of the hyperparameters $a$ and $b$ for the prior distribution wer
 
 
 ```{r Posterior Sum Table}
-posteriorSum |>
+posteriorSumTable <- posteriorSum |>
   gt() |>
   tab_header(
     title = "Posterior summary table for varying priors"
@@ -361,8 +365,11 @@ posteriorSum |>
   tab_footnote(
     footnote = "CI = Credible Interval",
     locations = cells_column_labels(CI_95)
+  ) |>
+  tab_options(
+    table.align = "center"
   )
-
+#posteriorSumTable
 ```
 
 # Likelihood Verification
@@ -487,12 +494,12 @@ probG50 <- mean(theta_R_G50 > theta_C_G50)
 The data was further parsed into subgroups by binned field goal distance. We repeated the analysis from above, but for each subgroup to determine if the probability of making a regular field goal is higher than a clutch field goal. The hypotheses are now $H_0: \theta_{R,Z_{i}} > \theta_{C,Z_{i}}|Y_{R,Z_{i}}, Y_{C,Z_{i}}$ and $H_A: \theta_{R,Z_{i}} \ngtr \theta_{C,Z_{i}}|Y_{R,Z_{i}}, Y_{C,Z_{i}}$. Monte Carlo simulations were run again in the same fashion and the results are in Table 3 below. We can see that the distributions do not differ for each distance except for the 40 - 49 yard subgroup. The probability that the distributions are different is much higher for kicks is greater than 30 yards.
 
 ```{r Binned Distance Table}
-binnedDistProbsTable <- data.frame(
+binnedDistProbs <- data.frame(
   Distance = FGdataTable$binned_kick_distance[1:4],
   Prob = c(probL30, probL39, probL49, probG50)
 )
 
-binnedDistProbsTable |>
+binnedDistProbsTable <- binnedDistProbs |>
   gt() |>
   tab_header(
     title = html("Probability of <i>\U03B8<sub>R, Z<sub>i</sub></sub> > \U03B8<sub>C, Z<sub>i</sub></sub></i> | <i>Y<sub>R, Z<sub>i</sub></sub> , Y<sub>C, Z<sub>i</sub></sub></i> for each binned distance")
@@ -503,7 +510,10 @@ binnedDistProbsTable |>
   ) |>
   cols_align(
     align = "center"
+  ) |>
+  tab_options(
+    table.align = "center"
   )
-
+#binnedDistProbsTable
 ```
 
