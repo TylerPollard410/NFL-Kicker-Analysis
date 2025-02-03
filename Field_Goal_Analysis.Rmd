@@ -266,8 +266,7 @@ p(\theta|Y) &\propto [\theta^{Y}(1-\theta)^{n-Y}][\theta^{a-1} (1 - \theta)^{b-1
 p(\theta|Y) &\propto \theta^{A-1}(1- \theta)^{B-1} \text{ , where } A = Y + a, B = n - Y + b \\
 \end{aligned}
 $$
-
-Therefore, $\theta|Y$ $\sim Beta(Y + a, n - Y + b)$.
+Therefore, $\theta|Y \sim Beta(Y + a, n - Y + b)$.
 
 # Posterior Distribution Plot and Prior Sensitivity Analysis
 
