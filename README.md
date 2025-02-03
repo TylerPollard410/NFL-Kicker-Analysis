@@ -21,7 +21,7 @@ Tyler Pollard
     fontCache: 'global'
   	},
     options: {
-      scale: 0.9 // Set the global scaling factor (85% of the default size)
+      scale: 0.85 // Set the global scaling factor (85% of the default size)
     }
   };
 </script>
