@@ -128,7 +128,7 @@ We will begin with aggregating the data over the type of field goal and
 distance. The data $Y$ is the discrete sum of $n$ independent Bernoulli
 trials (0 = Miss, 1 = Make) each with success/make probability $\theta$.
 Therefore, the likelihood $Y|\theta$ then follows a binomial
-distribution with $Y|\theta \sim Binomial(n, \theta)$ and $n = 24571$
+distribution with $Y|\theta \sim Binomial(n, \theta)$ and $n = 26632$
 attempts. A conjugate prior for a binomial likelihood is the Beta
 distribution, so we select the prior $\theta \sim Beta(a, b)$ with
 $a=b=1$ for an uninformative prior. The posterior distribution of
@@ -141,7 +141,9 @@ p(\theta|Y)  &\propto \left[{n \choose y}\theta^{y}(1-\theta)^{n-y}\right] \left
 p(\theta|Y) &\propto [\theta^{Y}(1-\theta)^{n-Y}][\theta^{a-1} (1 - \theta)^{b-1}] = \theta^{(Y + a) - 1}(1-\theta)^{(n - Y + b) - 1} \\
 p(\theta|Y) &\propto \theta^{A-1}(1- \theta)^{B-1} \text{ , where } A = Y + a, B = n - Y + b \\
 \end{aligned}
-$$ Therefore, $\theta|Y \sim Beta(Y + a, n - Y + b)$.
+$$
+
+Therefore, $\theta|Y \sim Beta(Y+a,n-Y+b)$.
 
 # Posterior Distribution Plot and Prior Sensitivity Analysis
 
