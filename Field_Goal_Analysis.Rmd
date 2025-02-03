@@ -263,6 +263,7 @@ $$
 p(\theta|Y) &= \frac{f(Y|\theta)\pi(\theta)}{m(Y)} \propto f(Y|\theta)\pi(\theta) 
 \end{aligned}
 $$
+
 $$
 \begin{aligned}
 p(\theta|Y)  &\propto \left[{n \choose y}\theta^{y}(1-\theta)^{n-y}\right] \left[\frac{\Gamma(a+b)}{\Gamma(a) \Gamma(b)} \theta^{a-1} (1 - \theta)^{b-1} \right] \\
@@ -511,12 +512,12 @@ binnedDistProbs <- data.frame(
 binnedDistProbsTable <- binnedDistProbs |>
   gt() |>
   tab_header(
-    title = "Bayesian p-value for each binned distance"
+    title = "Hypothesis probability for each binned distance"
     # title = html("Probability of <i>\U03B8<sub>R, Z<sub>i</sub></sub> > \U03B8<sub>C, Z<sub>i</sub></sub></i> | <i>Y<sub>R, Z<sub>i</sub></sub> , Y<sub>C, Z<sub>i</sub></sub></i> for each binned distance")
   ) |>
   cols_label(
     Distance = "Distance (Yards)",
-    Prob = "p-value"
+    Prob = "Probability"
     # Prob = html("<i>P(\U03B8<sub>R, Z<sub>i</sub></sub> > \U03B8<sub>C, Z<sub>i</sub></sub></i> | <i>Y<sub>R, Z<sub>i</sub></sub> , Y<sub>C, Z<sub>i</sub></sub> )</i>")
   ) |>
   cols_align(
