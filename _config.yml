@@ -1,4 +1,7 @@
 theme: jekyll-theme-slate
 
+title: NFL Field Goal Analysis
+description: A Bayesian analysis of NFL field goal data since 1999.
+
 markdown: kramdown
 

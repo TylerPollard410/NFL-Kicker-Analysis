@@ -39,9 +39,6 @@ Tyler Pollard
 - [Clutch Field Goal Analysis](#clutch-field-goal-analysis)
 - [Distance Field Goal Analysis](#distance-field-goal-analysis)
 
-The following study will outline a Bayesian analysis of NFL field goal
-data since 1999.
-
 # Data
 
 The data is from the `nflreadr` package as part of the `nflverse`. Let

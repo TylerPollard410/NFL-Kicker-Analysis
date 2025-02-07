@@ -13,8 +13,6 @@ output:
     toc_depth: 3
 ---
 
-The following study will outline a Bayesian analysis of NFL field goal data since 1999.
-
 ```{r setup, echo = FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
