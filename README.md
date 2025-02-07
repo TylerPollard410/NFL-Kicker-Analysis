@@ -137,6 +137,8 @@ distribution, so we select the prior $\theta \sim Beta(a, b)$ with
 $a=b=1$ for an uninformative prior. The posterior distribution of
 $\theta|Y$ can be derived by
 
+<div style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+
 $$
 \begin{aligned}
 p(\theta|Y) &= \frac{f(Y|\theta)\pi(\theta)}{m(Y)} \propto f(Y|\theta)\pi(\theta) 
@@ -151,6 +153,8 @@ p(\theta|Y) &\propto [\theta^{Y}(1-\theta)^{n-Y}][\theta^{a-1} (1 - \theta)^{b-1
 p(\theta|Y) &\propto \theta^{A-1}(1- \theta)^{B-1} \\
 \end{aligned}
 $$
+
+</div>
 
 where $A = Y + a, B = n - Y + b$. Therefore,
 $\theta\|Y \sim Beta(Y+a,n-Y+b)$.
