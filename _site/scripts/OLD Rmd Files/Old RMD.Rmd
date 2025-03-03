@@ -1,0 +1,637 @@
+```{r setup, echo = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60), tidy = TRUE)
+```
+
+```{r load libraries}
+# Load Libraries ----
+library(knitr)
+library(progressr)
+library(nflreadr)
+library(plyr)
+library(tidyverse)
+library(tictoc)
+library(tidyr)
+library(gt)
+library(gtsummary)
+library(glue)
+```
+
+\begin{center}
+\Large
+\textbf{ST540 Exam 1}
+\large
+Tyler Pollard
+\end{center}
+
+\singlespacing
+\vspace{-0.5in}
+\section{\normalsize{1. Data}}
+\vspace{-0.125in}
+The following study will outline a Bayesian analysis of NFL field goal data since 1999. The data is from the `nflreadr` package as part of the `nflverse`. Let $Y \in \{0, 1, 2, ..., n \}$ be the number of field goals made in $n$ field goal attempts. Let $X \in \{Regular, Clutch\}$ be the situational type of kick. A clutch kick is defined as any field goal attempt where the kicking team has the opportunity to either tie or put their team in the lead with a successful field goal (ie. kicking team is losing by 0, 1, 2, or 3 points before the kick), otherwise it is regular. Let $Z \in \{ < 30, 30 - 39, 40 - 49, \geq 50 \}$ be the binned distance of the field goal attempt, in yards.
+
+```{r Load play-by-play data}
+## Load Data ----
+### Play-by-Play Data since 1999 ----
+# (Takes about 2 minutes to load)
+#tic()
+pbpData <- with_progress(load_pbp(season = TRUE))
+#toc()
+
+# Data Dictionary
+pbpDataDictionary <- dictionary_pbp
+
+## Create Field Goal Data ----
+# Clean play-by-play data to: 
+#   Include relevant columns
+#   Include only field goal plays
+#   Group missed and blocked field goals as misses
+#   Identify clutch field goal attempts
+#     Any field goal that could tie game or change lead
+#   Identify clutch field goal makes
+
+FGpbpData <- pbpData |>
+  select(
+    game_id,
+    season,
+    field_goal_attempt,
+    field_goal_result,
+    kick_distance,
+    posteam_score,
+    defteam_score,
+    posteam_score_post,
+    defteam_score_post,
+    kicker_player_name
+  ) |>
+  filter(field_goal_attempt == 1) |>
+  mutate(
+    field_goal_make = ifelse(field_goal_result == "made", 1, 0),
+    clutch_attempt = ifelse(between(posteam_score - defteam_score, -3, 0), 1, 0),
+    clutch_make = ifelse(clutch_attempt == 1 & field_goal_make == 1, 1, 0),
+  )
+
+## Create summarized field goal datasets ----
+# Y:= Number of field goals made
+# X:= Clutch field goal (yes/no)
+# Z:= Binned field goal distance
+#       Bins: < 30, 30-39, 40-49, >= 50
+# n:= Number of field goals attempted
+# theta:= probability of making a field goal
+
+### Overall Field Goal Data ----
+FGdataOverall <- FGpbpData |>
+  summarise(
+    field_goal_attempts = n(),
+    field_goal_makes = sum(field_goal_make)
+  )
+FGdataOverall <- FGdataOverall |> select(field_goal_makes, field_goal_attempts)
+#save(FGdataOverall, file = "Data/FGdataOverall.RData")
+
+### Clutch Field Goal Data ----
+FGdataClutch <- FGpbpData |>
+  mutate(
+    clutch_attempt = ifelse(clutch_attempt == 0, "Regular", "Clutch")
+  ) |>
+  group_by(clutch_attempt) |>
+  summarise(
+    field_goal_attempts = n(),
+    field_goal_makes = sum(field_goal_make)
+  )
+FGdataClutch$clutch_attempt <- factor(FGdataClutch$clutch_attempt,
+                                      levels = c("Regular", "Clutch"))
+FGdataClutch <- FGdataClutch |> 
+  arrange(clutch_attempt) |>
+  select(clutch_attempt, field_goal_makes, field_goal_attempts)
+
+#save(FGdataClutch, file = "Data/FGdataClutch.RData")
+
+### Clutch and Distance Field Goal Data ----
+quantile(FGpbpData$kick_distance, c(0,0.25, 0.5, 0.75, 1))
+
+FGdataDistance <- FGpbpData |> 
+  mutate(
+    clutch_attempt = ifelse(clutch_attempt == 0, "Regular", "Clutch"),
+    binned_kick_distance = ifelse(kick_distance < 30, "< 30",
+                                  ifelse(between(kick_distance, 30, 39), "30 - 39",
+                                         ifelse(between(kick_distance, 40, 49), "40 - 49", ">= 50")))
+  ) |>
+  group_by(clutch_attempt, binned_kick_distance) |>
+  summarise(
+    field_goal_attempts = n(),
+    field_goal_makes = sum(field_goal_make)
+  )
+FGdataDistance$clutch_attempt <- factor(FGdataDistance$clutch_attempt,
+                                        levels = c("Regular", "Clutch"))
+FGdataDistance$binned_kick_distance <- factor(FGdataDistance$binned_kick_distance,
+                                              levels = c("< 30", "30 - 39", "40 - 49", ">= 50"))
+FGdataDistance <- FGdataDistance |>
+  arrange(clutch_attempt, binned_kick_distance) |>
+  select(clutch_attempt, binned_kick_distance, field_goal_makes, field_goal_attempts)
+
+#save(FGdataDistance, file = "Data/FGdataDistance.RData")
+```
+
+```{r Sample Size Table}
+### Sample Size Table for output ----
+# Make data frame for table
+FGdataTable <- FGdataDistance |>
+  mutate(
+    clutch_attempt = factor(clutch_attempt, levels = c("Regular", "Clutch")),
+    binned_kick_distance = factor(binned_kick_distance, levels = c("< 30", "30 - 39", "40 - 49", ">= 50"))
+    ) |>
+  arrange(
+    clutch_attempt, 
+    binned_kick_distance
+    ) |>
+  pivot_wider(
+    names_from = clutch_attempt, 
+    values_from = c(field_goal_makes, field_goal_attempts),
+    names_vary = "slowest"
+    ) |>
+  rowwise() |>
+  mutate(
+    field_goal_makes_All = sum(field_goal_makes_Regular, field_goal_makes_Clutch),
+    field_goal_attempts_All = sum(field_goal_attempts_Regular, field_goal_attempts_Clutch)
+  )
+
+allDist <- cbind(binned_kick_distance = "All Distances", data.frame(t(colSums(FGdataTable[, -1]))))
+FGdataTable <- rbind(FGdataTable, allDist)
+```
+
+\small
+\begin{minipage}{0.9\textwidth}
+\centering
+\captionof{table}{Counts of NFL field goals made and attempted since 1999}
+\begin{tabular}[c]{c|cc|cc!{\vrule width 1.5pt}cc}
+ & \multicolumn{2}{c}{Regular} & \multicolumn{2}{c!{\vrule width 1.5pt}}{Clutch} & \multicolumn{2}{c}{All Kicks} \\
+Distance (yards) & Makes & Attempts & Makes & Attempts & Makes & Attempts \\ \hline
+< 30          & `r FGdataTable[[2]][1]` & `r FGdataTable[[3]][1]` & `r FGdataTable[[4]][1]` & `r FGdataTable[[5]][1]` & 
+`r FGdataTable[[6]][1]` & `r FGdataTable[[7]][1]` \\
+30 - 39       & `r FGdataTable[[2]][2]` & `r FGdataTable[[3]][2]` & `r FGdataTable[[4]][2]` & `r FGdataTable[[5]][2]` & 
+`r FGdataTable[[6]][2]` & `r FGdataTable[[7]][2]` \\
+40 - 49       & `r FGdataTable[[2]][3]` & `r FGdataTable[[3]][3]` & `r FGdataTable[[4]][3]` & `r FGdataTable[[5]][3]` & 
+`r FGdataTable[[6]][3]` & `r FGdataTable[[7]][3]` \\
+$\geq 50$     & `r FGdataTable[[2]][4]` & `r FGdataTable[[3]][4]` & `r FGdataTable[[4]][4]` & `r FGdataTable[[5]][4]` & 
+`r FGdataTable[[6]][4]` & `r FGdataTable[[7]][4]` \\ \Xhline{3\arrayrulewidth}
+All Distances & 14126 & 17027 & 6910 & 8444 & 21036 & 25471
+\end{tabular}
+\end{minipage}
+
+\normalsize
+\vspace{-0.125in}
+\section{\normalsize{2. Aggregated Field Goal Analysis}}
+\vspace{-0.125in}
+We will begin with aggregating the data over the type of field goal and distance. The data $Y$ is the discrete sum of $n$ independent Bernoulli trials (0 = Miss, 1 = Make) each with success/make probability $\theta$. Therefore, the likelihood $Y|\theta$ then follows a binomial distribution with $Y|\theta \sim Binomial(n, \theta)$ and $n = 24571$ attempts. A conjugate prior for a binomial likelihood is the Beta distribution, so we select the prior $\theta \sim Beta(a, b)$ with $a=b=1$ for an uninformative prior. The posterior distribution of $\theta|Y$ can be derived by
+
+\vspace{-0.25in}
+\small
+$$
+\begin{aligned}
+p(\theta|Y) = \frac{f(Y|\theta)\pi(\theta)}{m(Y)} &\propto f(Y|\theta)\pi(\theta) \\
+p(\theta|Y)  &\propto \left[{n \choose y}\theta^{y}(1-\theta)^{n-y}\right] \left[\frac{\Gamma(a+b)}{\Gamma(a) \Gamma(b)} \theta^{a-1} (1 - \theta)^{b-1} \right] \\
+p(\theta|Y) &\propto [\theta^{Y}(1-\theta)^{n-Y}][\theta^{a-1} (1 - \theta)^{b-1}] = \theta^{(Y + a) - 1}(1-\theta)^{(n - Y + b) - 1} \\
+p(\theta|Y) &\propto \theta^{A-1}(1- \theta)^{B-1} \text{ , where } A = Y + a, B = n - Y + b \\
+\end{aligned}
+$$
+\normalsize
+\noindent Therefore, $\theta|Y \sim Beta(Y + a, n - Y + b)$.
+
+\vspace{-0.25in}
+\section{\normalsize{3. Posterior Distribution Plot and Prior Sensitivity Analysis}}
+\vspace{-0.125in}
+A plot of the posterior distribution for probability of making a field goal with the prior $\theta \sim Beta(1,1)$ is plotted in Figure 1 below. Various values of the hyperparameters $a$ and $b$ for the prior distribution were used to analyze the sensitivity of the posterior to the prior. The posterior mean, standard deviation (SD), and 95\% credible interval (CI) are in Table 2 below for the hyperparameter values $a = b = \{0.5, 1, 2, 10, 100 \}$. The results show that there is very little variation in the posterior for each prior, therefore, the posterior is not sensitive to the prior due to the large sample size of field goal attempts.
+\hspace{-0.3in}
+\vspace{-0.125in}
+\begin{minipage}{\textwidth}
+\hspace{-0.3in}
+\begin{minipage}{0.5\textwidth}
+```{r Posterior Plot, fig.align = "left", out.width="90%",  out.height="100%", fig.cap = "Posterior of $\\theta$ for Beta(1,1) prior"}
+## Set parameters ----
+# Create grid of theta values from 0 to 1
+theta <- seq(0, 1, by = 0.001)
+
+# Set shape parameters of prior Beta distribution
+a <- c(0.5, 1, 2, 10, 100)
+b <- c(0.5, 1, 2, 10, 100)
+
+## Create prior distributions ----
+prior <- data.frame(theta)
+for(i in 1:length(a)){
+  prior <- cbind(prior, dbeta(theta, a[i], b[i]))
+}
+names(prior)[-1] <- a
+
+## Set data values ----
+n <- FGdataOverall$field_goal_attempts
+y <- FGdataOverall$field_goal_makes
+
+## Create posterior distribution ----
+posterior <- data.frame(theta)
+posteriorSum <- data.frame(check.names = FALSE,
+  "a,b" = as.character(a),
+  "Mean" = NA,
+  "SD" = NA,
+  "95% Credible Interval" = NA
+)
+for(i in 1:length(a)){
+  A <- y + a[i]
+  B <- n - y + b[i]
+  posterior <- cbind(posterior, dbeta(theta, A, B))
+  posteriorSum[["Mean"]][i] <- round(A/(A+B), 4)
+  posteriorSum[["SD"]][i] <- round(sqrt(A*B/((A+B)^2*(A+B+1))), 4)
+  posteriorSum[["95% Credible Interval"]][i] <- paste0("(", round(qbeta(0.025, A, B), 4), ", ", round(qbeta(0.975, A, B), 4), ")")
+}
+names(posterior)[-1] <- as.character(a)
+
+## Plot posterior distribution ----
+par(oma = c(0,0,0,0))
+plot(posterior[["theta"]], posterior[[3]], type = "l", col = "black", lwd = 2,
+     xlab = expression("Probability of Making a Field Goal, "*theta),
+     ylab = expression("Posterior Density, "*italic("p")*"("*theta*"|Y)"),
+     mgp = c(2, 0.5, 0)
+     )
+```
+\end{minipage}
+\footnotesize
+\begin{minipage}{0.5\textwidth}
+\centering
+\captionsetup{width=0.9\linewidth}
+\captionof{table}{Posterior summary table for varying priors}
+\begin{tabular}[b]{c|ccc}
+Prior & \multicolumn{3}{c}{Posterior} \\ \hline
+Beta(a,b) & Mean & SD & 95\% Credible \\
+a = b = &      &    & Interval \\ \hline
+`r posteriorSum[[1]][1]` & `r posteriorSum[[2]][1]` & `r posteriorSum[[3]][1]` & `r posteriorSum[[4]][1]` \\
+`r posteriorSum[[1]][2]` & `r posteriorSum[[2]][2]` & `r posteriorSum[[3]][2]` & `r posteriorSum[[4]][2]` \\
+`r posteriorSum[[1]][3]` & `r posteriorSum[[2]][3]` & `r posteriorSum[[3]][3]` & `r posteriorSum[[4]][3]` \\
+`r posteriorSum[[1]][4]` & `r posteriorSum[[2]][4]` & `r posteriorSum[[3]][4]` & `r posteriorSum[[4]][4]` \\
+`r posteriorSum[[1]][5]` & `r posteriorSum[[2]][5]` & `r posteriorSum[[3]][5]` & `r posteriorSum[[4]][5]` \\
+\end{tabular}
+\end{minipage}
+\end{minipage}
+
+\vspace{-0.25in}
+\normalsize
+\section{\normalsize{4. Likelihood Verification}}
+\vspace{-0.125in}
+\hspace{-0.3in}
+\begin{minipage}{\textwidth}
+\begin{minipage}[t]{0.55\textwidth}
+\setstretch{1.0}
+\hspace{0.125in} To verify the selected likelihood $Y|\theta \sim Binomial(n, \theta)$ is appropriate for the data, we will compare the PMF of the likelihood with the observed data $Y_{obs} = 21036$. The parameters of the likelihood were set to $n = 25471$ and $\theta = \hat{\theta} = Y/n$ to represent the sample proportion. The fit likelihood PMF has highest probability at $Y = Y_{obs}$ with very small variance when considering all possible values of $Y$ which is closely representative of the observed data. The likelihood is appropriate. 
+\end{minipage}
+\begin{minipage}[t]{0.45\textwidth}
+\vspace{-0.25in}
+\captionsetup{width=0.9\linewidth}
+```{r Problem 4, out.width='90%', fig.cap="Likelihood density of Binomial(n,$\\hat{\\theta}$) compared to $Y_{obs}$"}
+n <- FGdataOverall$field_goal_attempts
+y <- FGdataOverall$field_goal_makes
+thetaHat0 <- y/n
+
+yobs <- 0:n
+ylike <- dbinom(yobs, n, thetaHat0)
+par(oma = c(1,0,0,0))
+plot(yobs, ylike, type = "l", lwd = 2,
+     xlab = expression("Number of Field Goals Made, "*italic("Y")),
+     ylab = expression("Likelihood, "*italic("f")*"(Y|"*hat(theta)*")"),
+     mgp = c(2, 0.5, 0))
+abline(v = 21036, col = "blue", lwd = 1.5)
+text(x = 17750, y = 0.0005, label = expression(italic("Y"[obs])*" = 21036"), col = "blue")
+
+# bounds <- which(ylike > 0.000001)
+# lower <- min(bounds)
+# upper <- max(bounds)
+# 
+# # hist(y, breaks = seq(lower, upper, by = 1))
+# plot(yobs, ylike, cex = 0.3,  #pch = 16,
+#      xlim = c(lower, upper),
+#      xlab = expression("Number of Field Goals Made, "*italic("Y")),
+#      ylab = expression("Likelihood, "*italic("f")*"(Y|"*hat(theta)*")"),
+#      mgp = c(2, 0.5, 0))
+# abline(v = 21036, col = "blue", lwd = 2)
+# text(x = y + 60, y = 0.0005, label = expression(italic("Y"[obs])*" = 21036"), col = "blue")
+```
+\end{minipage}
+\end{minipage}
+
+\vspace{-0.25in}
+\section{\normalsize{5. Clutch Field Goal Analysis}}
+```{r Problem 5}
+# Hypothesis test of regular vs clutch
+yR <- FGdataClutch |> filter(clutch_attempt == "Regular") |> pull(field_goal_makes)
+nR <- FGdataClutch |> filter(clutch_attempt == "Regular") |> pull(field_goal_attempts)
+yC <- FGdataClutch |> filter(clutch_attempt == "Clutch") |> pull(field_goal_makes)
+nC <- FGdataClutch |> filter(clutch_attempt == "Clutch") |> pull(field_goal_attempts)
+
+a <- 1
+b <- 1
+
+AR <- yR + a
+BR <- nR - yR + b
+AC <- yC + a
+BC <- nC - yC + b
+
+S <- 10000
+set.seed(52)
+thetaR <- rbeta(S, AR, BR)
+thetaC <- rbeta(S, AC, BC)
+thetaDiff <- thetaR - thetaC
+
+thetaDiffCI <- quantile(thetaDiff, c(0.025, 0.975))
+probRgrC <- mean(thetaR > thetaC)
+```
+\vspace{-0.125in}
+A hypothesis test was conducted to determine if the distribution of made fields goals given field goal attempts differ for regular vs clutch field goals. In other words, if the probability of making a regular field goal is greater than the probability of making a clutch field goal almost all of the time or never then we can say they distributions are different. Therefore, $H_0: \theta_R > \theta_C|Y_R, Y_C$ and $H_A: \theta_R \ngtr \theta_C|Y_R, Y_C$. Monte Carlo sampling was used with 10,000 samples from the posterior distribution of both $\theta_R|Y_R,Y_C$ and $\theta_C|Y_R,Y_C$ to determine $P(\theta_R > \theta_C|Y_R, Y_C)$. From the simulation, the probability of making a regular kick is greater than a clutch kick with probability $P(\theta_R > \theta_C|Y_R, Y_C) = `r probRgrC`$ and conclude there is a difference.
+
+\vspace{-0.25in}
+\section{\normalsize{6. Distance Field Goal Analysis}}
+\vspace{-0.125in}
+```{r Problem 6}
+yRDist <- FGdataTable$field_goal_makes_Regular[-5]
+nRDist <- FGdataTable$field_goal_attempts_Regular[-5]
+yCDist <- FGdataTable$field_goal_makes_Clutch[-5]
+nCDist <- FGdataTable$field_goal_attempts_Clutch[-5]
+
+ARDist <- yRDist + a
+BRDist <- nRDist - yRDist + b
+ACDist <- yCDist + a
+BCDist <- nCDist - yCDist + b
+
+set.seed(52)
+theta_R_L30 <- rbeta(S, ARDist[1], BRDist[1])
+theta_R_L39 <- rbeta(S, ARDist[2], BRDist[2])
+theta_R_L49 <- rbeta(S, ARDist[3], BRDist[3])
+theta_R_G50 <- rbeta(S, ARDist[4], BRDist[4])
+
+theta_C_L30 <- rbeta(S, ACDist[1], BCDist[1])
+theta_C_L39 <- rbeta(S, ACDist[2], BCDist[2])
+theta_C_L49 <- rbeta(S, ACDist[3], BCDist[3])
+theta_C_G50 <- rbeta(S, ACDist[4], BCDist[4])
+
+probL30 <- mean(theta_R_L30 > theta_C_L30)
+probL39 <- mean(theta_R_L39 > theta_C_L39)
+probL49 <- mean(theta_R_L49 > theta_C_L49)
+probG50 <- mean(theta_R_G50 > theta_C_G50)
+```
+The data was further parsed into subgroups by binned field goal distance. We repeated the analysis from above, but for each subgroup to determine if the probability of making a regular field goal is higher than a clutch field goal. The hypotheses are now $H_0: \theta_{R,Z_{i}} > \theta_{C,Z_{i}}|Y_{R,Z_{i}}, Y_{C,Z_{i}}$ and $H_A: \theta_{R,Z_{i}} \ngtr \theta_{C,Z_{i}}|Y_{R,Z_{i}}, Y_{C,Z_{i}}$. Monte Carlo simulations were run again in the same fashion and the results are in Table 3 below. We can see that the distributions do not differ for each distance except for the 40 - 49 yard subgroup. The probability that the distributions are different is much higher for kicks is greater than 30 yards.
+
+\begin{minipage}[b]{\textwidth}
+\centering
+\captionof{table}{Probability of $\theta_{R,Z_{i}} > \theta_{C,Z_{i}}|Y_{R,Z_{i}}, Y_{C,Z_{i}}$ for each binned distance}
+\begin{tabular}{c|cccc}
+ & \multicolumn{4}{c}{Distance (yards)} \\
+ & < 30 & 30 - 39 & 40 - 49 & $\geq 50$ \\ \hline
+$P(\theta_{R,Z_{i}} > \theta_{C,Z_{i}}|Y_{R,Z_{i}}, Y_{C,Z_{i}})$ & `r round(probL30, 4)` & `r round(probL39, 4)` & `r round(probL49, 4)` & `r round(probG50, 4)` \\
+\end{tabular}
+\end{minipage}
+
+```{r Code, echo = TRUE, eval = FALSE}
+# Load Libraries ----
+library(tidyverse)
+library(knitr)
+library(tidyr)
+
+# Part 1 ==========================================================================================================
+## Load Data ----
+### Play-by-Play Data since 1999 ----
+# (Takes about 2 minutes to load)
+tic()
+pbpData <- with_progress(load_pbp(season = TRUE))
+toc()
+
+# Data Dictionary
+pbpDataDictionary <- dictionary_pbp
+
+## Create Field Goal Data ----
+# Clean play-by-play data to: 
+#   Include relevant columns
+#   Include only field goal plays
+#   Group missed and blocked field goals as misses
+#   Identify clutch field goal attempts
+#     Any field goal that could tie game or change lead
+#   Identify clutch field goal makes
+
+FGpbpData <- pbpData |>
+  select(
+    game_id,
+    season,
+    field_goal_attempt,
+    field_goal_result,
+    kick_distance,
+    posteam_score,
+    defteam_score,
+    posteam_score_post,
+    defteam_score_post,
+    kicker_player_name
+  ) |>
+  filter(field_goal_attempt == 1) |>
+  mutate(
+    field_goal_make = ifelse(field_goal_result == "made", 1, 0),
+    clutch_attempt = ifelse(between(posteam_score - defteam_score, -3, 0), 1, 0),
+    clutch_make = ifelse(clutch_attempt == 1 & field_goal_make == 1, 1, 0),
+  )
+
+## Create summarized field goal datasets ----
+# Y:= Number of field goals made
+# X:= Clutch field goal (yes/no)
+# Z:= Binned field goal distance
+#       Bins: < 30, 30-39, 40-49, >= 50
+# n:= Number of field goals attempted
+# theta:= probability of making a field goal
+
+### Overall Field Goal Data ----
+FGdataOverall <- FGpbpData |>
+  summarise(
+    field_goal_attempts = n(),
+    field_goal_makes = sum(field_goal_make)
+  )
+FGdataOverall <- FGdataOverall |> select(field_goal_makes, field_goal_attempts)
+save(FGdataOverall, file = "Data/FGdataOverall.RData")
+
+### Clutch Field Goal Data ----
+FGdataClutch <- FGpbpData |>
+  mutate(
+    clutch_attempt = ifelse(clutch_attempt == 0, "Regular", "Clutch")
+  ) |>
+  group_by(clutch_attempt) |>
+  summarise(
+    field_goal_attempts = n(),
+    field_goal_makes = sum(field_goal_make)
+  )
+FGdataClutch$clutch_attempt <- factor(FGdataClutch$clutch_attempt,
+                                      levels = c("Regular", "Clutch"))
+FGdataClutch <- FGdataClutch |> 
+  arrange(clutch_attempt) |>
+  select(clutch_attempt, field_goal_makes, field_goal_attempts)
+
+save(FGdataClutch, file = "Data/FGdataClutch.RData")
+
+### Clutch and Distance Field Goal Data ----
+quantile(FGpbpData$kick_distance, c(0,0.25, 0.5, 0.75, 1))
+
+FGdataDistance <- FGpbpData |> 
+  mutate(
+    clutch_attempt = ifelse(clutch_attempt == 0, "Regular", "Clutch"),
+    binned_kick_distance = ifelse(kick_distance < 30, "< 30",
+                                  ifelse(between(kick_distance, 30, 39), "30 - 39",
+                                         ifelse(between(kick_distance, 40, 49), "40 - 49", ">= 50")))
+  ) |>
+  group_by(clutch_attempt, binned_kick_distance) |>
+  summarise(
+    field_goal_attempts = n(),
+    field_goal_makes = sum(field_goal_make)
+  )
+FGdataDistance$clutch_attempt <- factor(FGdataDistance$clutch_attempt,
+                                        levels = c("Regular", "Clutch"))
+FGdataDistance$binned_kick_distance <- factor(FGdataDistance$binned_kick_distance,
+                                              levels = c("< 30", "30 - 39", "40 - 49", ">= 50"))
+FGdataDistance <- FGdataDistance |>
+  arrange(clutch_attempt, binned_kick_distance) |>
+  select(clutch_attempt, binned_kick_distance, field_goal_makes, field_goal_attempts)
+
+save(FGdataDistance, file = "Data/FGdataDistance.RData")
+
+## Load Data from cleaned datasets ----
+load(file = "Data/FGdataOverall.RData")
+load(file = "Data/FGdataClutch.RData")
+load(file = "Data/FGdataDistance.RData")
+
+### Sample Size Table for output ----
+# Make data frame for table
+FGdataTable <- FGdataDistance |>
+  mutate(
+    clutch_attempt = factor(clutch_attempt, levels = c("Regular", "Clutch")),
+    binned_kick_distance = factor(binned_kick_distance, levels = c("< 30", "30 - 39", "40 - 49", ">= 50"))
+  ) |>
+  arrange(
+    clutch_attempt, 
+    binned_kick_distance
+  ) |>
+  pivot_wider(
+    names_from = clutch_attempt, 
+    values_from = c(field_goal_makes, field_goal_attempts),
+    names_vary = "slowest"
+  ) |>
+  rowwise() |>
+  mutate(
+    field_goal_makes_All = sum(field_goal_makes_Regular, field_goal_makes_Clutch),
+    field_goal_attempts_All = sum(field_goal_attempts_Regular, field_goal_attempts_Clutch)
+  )
+
+allDist <- cbind(binned_kick_distance = "All Distances", data.frame(t(colSums(FGdataTable[, -1]))))
+FGdataTable <- rbind(FGdataTable, allDist)
+
+# Part 3 ==========================
+## Set parameters ----
+# Create grid of theta values from 0 to 1
+theta <- seq(0, 1, by = 0.001)
+
+# Set shape parameters of prior Beta distribution
+a <- c(0.5, 1, 2, 10, 100)
+b <- c(0.5, 1, 2, 10, 100)
+
+## Create prior distributions ----
+prior <- data.frame(theta)
+for(i in 1:length(a)){
+  prior <- cbind(prior, dbeta(theta, a[i], b[i]))
+}
+names(prior)[-1] <- a
+
+## Set data values ----
+n <- FGdataOverall$field_goal_attempts
+y <- FGdataOverall$field_goal_makes
+
+## Create posterior distribution ----
+posterior <- data.frame(theta)
+posteriorSum <- data.frame(check.names = FALSE,
+  "a,b" = as.character(a),
+  "Mean" = NA,
+  "SD" = NA,
+  "95% Credible Interval" = NA
+)
+for(i in 1:length(a)){
+  A <- y + a[i]
+  B <- n - y + b[i]
+  posterior <- cbind(posterior, dbeta(theta, A, B))
+  posteriorSum[["Mean"]][i] <- round(A/(A+B), 4)
+  posteriorSum[["SD"]][i] <- round(sqrt(A*B/((A+B)^2*(A+B+1))), 4)
+  posteriorSum[["95% Credible Interval"]][i] <- paste0("(", round(qbeta(0.025, A, B), 4), ", ", round(qbeta(0.975, A, B), 4), ")")
+}
+names(posterior)[-1] <- as.character(a)
+
+## Plot posterior distribution ----
+par(oma = c(0,0,0,0))
+plot(posterior[["theta"]], posterior[[3]], type = "l", col = "black", lwd = 2,
+     xlab = expression("Probability of Making a Field Goal, "*theta),
+     ylab = expression("Posterior Density, "*italic("p")*"("*theta*"|Y)"),
+     mgp = c(2, 0.5, 0)
+     )
+
+# Part 4 ==============
+n <- FGdataOverall$field_goal_attempts
+y <- FGdataOverall$field_goal_makes
+thetaHat0 <- y/n
+
+yobs <- 0:n
+ylike <- dbinom(yobs, n, thetaHat0)
+par(oma = c(1,0,0,0))
+plot(yobs, ylike, type = "l", lwd = 2,
+     xlab = expression("Number of Field Goals Made, "*italic("Y")),
+     ylab = expression("Likelihood, "*italic("f")*"(Y|"*hat(theta)*")"),
+     mgp = c(2, 0.5, 0))
+abline(v = 21036, col = "blue", lwd = 1.5)
+text(x = 17750, y = 0.0005, label = expression(italic("Y"[obs])*" = 21036"), col = "blue")
+
+# Part 5 ===========
+# Hypothesis test of regular vs clutch
+yR <- FGdataClutch |> filter(clutch_attempt == "Regular") |> pull(field_goal_makes)
+nR <- FGdataClutch |> filter(clutch_attempt == "Regular") |> pull(field_goal_attempts)
+yC <- FGdataClutch |> filter(clutch_attempt == "Clutch") |> pull(field_goal_makes)
+nC <- FGdataClutch |> filter(clutch_attempt == "Clutch") |> pull(field_goal_attempts)
+
+a <- 1
+b <- 1
+
+AR <- yR + a
+BR <- nR - yR + b
+AC <- yC + a
+BC <- nC - yC + b
+
+S <- 10000
+set.seed(52)
+thetaR <- rbeta(S, AR, BR)
+thetaC <- rbeta(S, AC, BC)
+thetaDiff <- thetaR - thetaC
+
+thetaDiffCI <- quantile(thetaDiff, c(0.025, 0.975))
+probRgrC <- mean(thetaR > thetaC)
+
+
+# Part 6 =========
+yRDist <- FGdataTable$field_goal_makes_Regular[-5]
+nRDist <- FGdataTable$field_goal_attempts_Regular[-5]
+yCDist <- FGdataTable$field_goal_makes_Clutch[-5]
+nCDist <- FGdataTable$field_goal_attempts_Clutch[-5]
+
+ARDist <- yRDist + a
+BRDist <- nRDist - yRDist + b
+ACDist <- yCDist + a
+BCDist <- nCDist - yCDist + b
+
+set.seed(52)
+theta_R_L30 <- rbeta(S, ARDist[1], BRDist[1])
+theta_R_L39 <- rbeta(S, ARDist[2], BRDist[2])
+theta_R_L49 <- rbeta(S, ARDist[3], BRDist[3])
+theta_R_G50 <- rbeta(S, ARDist[4], BRDist[4])
+
+theta_C_L30 <- rbeta(S, ACDist[1], BCDist[1])
+theta_C_L39 <- rbeta(S, ACDist[2], BCDist[2])
+theta_C_L49 <- rbeta(S, ACDist[3], BCDist[3])
+theta_C_G50 <- rbeta(S, ACDist[4], BCDist[4])
+
+probL30 <- mean(theta_R_L30 > theta_C_L30)
+probL39 <- mean(theta_R_L39 > theta_C_L39)
+probL49 <- mean(theta_R_L49 > theta_C_L49)
+probG50 <- mean(theta_R_G50 > theta_C_G50)
+```
+
