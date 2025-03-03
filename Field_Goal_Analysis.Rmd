@@ -1,5 +1,4 @@
 ---
-title: "NFL Field Goal Analysis"
 author: "Tyler Pollard"
 date: "2024-08-22"
 header-includes:
@@ -7,8 +6,8 @@ header-includes:
 output:  
   github_document:
     html_preview: false
-    includes: 
-      in_header: head.html
+    # includes: 
+    #   in_header: head.html
     toc: true
     toc_depth: 3
 ---
@@ -40,11 +39,11 @@ The data is from the `nflreadr` package as part of the `nflverse`. Let $Y \in \{
 ### Play-by-Play Data since 1999 ----
 # (Takes about 2 minutes to load)
 #tic()
-pbpData <- with_progress(load_pbp(season = TRUE))
+#pbpData <- with_progress(load_pbp(season = TRUE))
 #toc()
 
 # Data Dictionary
-pbpDataDictionary <- dictionary_pbp
+#pbpDataDictionary <- dictionary_pbp
 
 ## Create Field Goal Data ----
 # Clean play-by-play data to:
@@ -55,25 +54,27 @@ pbpDataDictionary <- dictionary_pbp
 #     Any field goal that could tie game or change lead
 #   Identify clutch field goal makes
 
-FGpbpData <- pbpData |>
-  select(
-    game_id,
-    season,
-    field_goal_attempt,
-    field_goal_result,
-    kick_distance,
-    posteam_score,
-    defteam_score,
-    posteam_score_post,
-    defteam_score_post,
-    kicker_player_name
-  ) |>
-  filter(field_goal_attempt == 1) |>
-  mutate(
-    field_goal_make = ifelse(field_goal_result == "made", 1, 0),
-    clutch_attempt = ifelse(between(posteam_score - defteam_score, -3, 0), 1, 0),
-    clutch_make = ifelse(clutch_attempt == 1 & field_goal_make == 1, 1, 0),
-  )
+# FGpbpData <- pbpData |>
+#   select(
+#     game_id,
+#     season,
+#     field_goal_attempt,
+#     field_goal_result,
+#     kick_distance,
+#     posteam_score,
+#     defteam_score,
+#     posteam_score_post,
+#     defteam_score_post,
+#     kicker_player_name
+#   ) |>
+#   filter(field_goal_attempt == 1) |>
+#   mutate(
+#     field_goal_make = ifelse(field_goal_result == "made", 1, 0),
+#     clutch_attempt = ifelse(between(posteam_score - defteam_score, -3, 0), 1, 0),
+#     clutch_make = ifelse(clutch_attempt == 1 & field_goal_make == 1, 1, 0),
+#   )
+#save(FGpbpData, file = "_data/FGpbpData.RData")
+load(file = "_data/FGpbpData.RData")
 
 ## Create summarized field goal datasets ----
 # Y:= Number of field goals made
@@ -169,10 +170,10 @@ FGdataTable <- rbind(FGdataTable, allDist)
 
 FGdataTableOut <- FGdataTable |>
   gt() |>
-  tab_header(
-    title = "Counts of NFL field goals made and attempted",
-    subtitle = "Since 1999"
-  ) |>
+  # tab_header(
+  #   title = "Counts of NFL field goals made and attempted",
+  #   subtitle = "Since 1999"
+  # ) |>
   tab_spanner(
     label = "Regular",
     columns = c(field_goal_makes_Regular, field_goal_attempts_Regular)
@@ -246,7 +247,22 @@ FGdataTableOut <- FGdataTable |>
   tab_options(
     table.align = "center"
   ) |>
-  as_raw_html()
+  tab_style(
+    style = list(
+      cell_fill(color = "#373737"),
+      cell_text(color = "#fff")
+    ),
+    locations = list(
+      cells_column_labels()
+    )
+  ) |>
+  tab_options(
+    column_labels.padding = "10px",
+    table.background.color = "#f2f2f2"
+  ) |>
+  #opt_vertical_padding(scale = 0.25) |>
+  tab_caption(caption = md("Table1: Counts of NFL field goals made and attempted. All kicks since 1999.")) #|>
+  #as_raw_html()
 
 #Counts of NFL field goals made and attempted since 1999
 FGdataTableOut
@@ -278,7 +294,7 @@ where $A = Y + a, B = n - Y + b$. Therefore, $\theta\|Y \sim Beta(Y+a,n-Y+b)$.
 
 A plot of the posterior distribution for probability of making a field goal with the prior $\theta \sim Beta(1,1)$ is plotted below.  
 
-```{r Posterior Plot, fig.align = "center", out.width="60%",  out.height="50%"}
+```{r Posterior Plot, fig.align = "center", out.width="90%"}
 ## Set parameters ----
 # Create grid of theta values from 0 to 1
 theta <- seq(0, 1, by = 0.001)
@@ -317,7 +333,7 @@ for(i in 1:length(a)){
 names(posterior)[-1] <- as.character(a)
 
 ## Plot posterior distribution ----
-ggplot() +
+PPDplot <- ggplot() +
   geom_line(data = posterior, aes(x = theta, y = `2`)) +
   labs(
     title = expression(paste("Posterior of ", theta, " for ", italic("Beta"), "(1,1) prior")),
@@ -374,9 +390,21 @@ posteriorSumTable <- posteriorSum |>
     footnote = "CI = Credible Interval",
     locations = cells_column_labels(CI_95)
   ) |>
+  tab_style(
+    style = list(
+      cell_fill(color = "#373737"),
+      cell_text(color = "#fff")
+    ),
+    locations = list(
+      cells_column_labels()
+    )
+  ) |>
   tab_options(
-    table.align = "center"
-  )|>
+    column_labels.padding = "10px",
+    table.background.color = "#f2f2f2"
+  ) |>
+  #opt_vertical_padding(scale = 0.25) |>
+  tab_caption(caption = md("Table 2: Posterior summary table for varying priors")) |>
   as_raw_html()
 posteriorSumTable
 ```
@@ -390,7 +418,7 @@ y <- as.integer(FGdataOverall$field_goal_makes)
 
 To verify the selected likelihood $Y|\theta \sim Binomial(n, \theta)$ is appropriate for the data, we will compare the PMF of the likelihood with the observed data $Y_{obs} = `r as.integer(y)`$. The parameters of the likelihood were set to $n = `r n`$ and $\theta = \hat{\theta} = Y/n$ to represent the sample proportion. The fit likelihood PMF has highest probability at $Y = Y_{obs}$ with very small variance when considering all possible values of $Y$ which is closely representative of the observed data. The likelihood is appropriate. 
 
-```{r Likelihood Plot, fig.align = "center", out.width='60%', out.height="50%"}
+```{r Likelihood Plot, fig.align = "center", out.width='90%'}
 thetaHat0 <- y/n
 
 yobs <- 0:n
@@ -510,10 +538,10 @@ binnedDistProbs <- data.frame(
 
 binnedDistProbsTable <- binnedDistProbs |>
   gt() |>
-  tab_header(
-    title = "Hypothesis probability for each binned distance"
+  #tab_header(
+   # title = "Hypothesis probability for each binned distance"
     # title = html("Probability of <i>\U03B8<sub>R, Z<sub>i</sub></sub> > \U03B8<sub>C, Z<sub>i</sub></sub></i> | <i>Y<sub>R, Z<sub>i</sub></sub> , Y<sub>C, Z<sub>i</sub></sub></i> for each binned distance")
-  ) |>
+  #) |>
   cols_label(
     Distance = "Distance (Yards)",
     Prob = "Probability"
@@ -522,9 +550,21 @@ binnedDistProbsTable <- binnedDistProbs |>
   cols_align(
     align = "center"
   ) |>
+  tab_style(
+    style = list(
+      cell_fill(color = "#373737"),
+      cell_text(color = "#fff")
+    ),
+    locations = list(
+      cells_column_labels()
+    )
+  ) |>
   tab_options(
-    table.align = "center"
-  )|>
+    column_labels.padding = "10px",
+    table.background.color = "#f2f2f2"
+  ) |>
+  #opt_vertical_padding(scale = 0.25) |>
+  tab_caption(caption = md("Table 3: Hypothesis probability for each binned distance")) |>
   as_raw_html()
 binnedDistProbsTable
 ```
