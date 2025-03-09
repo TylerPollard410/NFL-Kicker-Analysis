@@ -23,7 +23,7 @@ the lead with a successful field goal (ie. kicking team is losing by 0,
 $Z \in \{ < 30, 30 - 39, 40 - 49, \geq 50 \}$ be the binned distance of
 the field goal attempt, in yards.
 
-<div id="yjnglkdkhu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="wvceamuiii" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
   &#10;  <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false" style="-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'; display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #F2F2F2; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3;" bgcolor="#F2F2F2">
   <caption><span class="gt_from_md">Table1: Counts of NFL field goals made and attempted. All kicks since 1999.</span></caption>
   <thead style="border-style: none;">
@@ -128,6 +128,8 @@ $\theta\|Y \sim Beta(Y+a,n-Y+b)$.
 A plot of the posterior distribution for probability of making a field
 goal with the prior $\theta \sim Beta(1,1)$ is plotted below.
 
+<img src="README_files/figure-gfm/Posterior Plot-1.png" width="90%" style="display: block; margin: auto;" />
+
 Various values of the hyperparameters $a$ and $b$ for the prior
 distribution were used to analyze the sensitivity of the posterior to
 the prior. The posterior mean, standard deviation (SD), and 95% credible
@@ -137,7 +139,7 @@ little variation in the posterior for each prior, therefore, the
 posterior is not sensitive to the prior due to the large sample size of
 field goal attempts.
 
-<div id="offgumbuwu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="zjlbqmdlbx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
   &#10;  <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false" style="-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'; display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #F2F2F2; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3;" bgcolor="#F2F2F2">
   <caption><span class="gt_from_md">Table 2: Posterior summary table for varying priors</span></caption>
   <thead style="border-style: none;">

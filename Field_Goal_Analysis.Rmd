@@ -351,6 +351,7 @@ PPDplot <- ggplot() +
     axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)),
     axis.title.x = element_text(margin = margin(t = 20, r = 0, b = 20, l = 0))
   )
+PPDplot
 ```
 
 Various values of the hyperparameters $a$ and $b$ for the prior distribution were used to analyze the sensitivity of the posterior to the prior. The posterior mean, standard deviation (SD), and 95\% credible interval (CI) are in the table below for the hyperparameter values $a = b = \{0.5, 1, 2, 10, 100 \}$. The results show that there is very little variation in the posterior for each prior, therefore, the posterior is not sensitive to the prior due to the large sample size of field goal attempts.
