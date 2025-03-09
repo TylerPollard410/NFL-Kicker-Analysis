@@ -1,0 +1,40 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+/* original pulled from jekyll-them-slate as reference
+#forkme_banner {
+  display: block;
+  position: absolute;
+  top:0;
+  right: 10px;
+  z-index: 10;
+  padding: 10px 50px 10px 10px;
+  color: #fff;
+  background: url('../images/blacktocat.png') #0090ff no-repeat 95% 50%;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(0,0,0,.5);
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+*/
+
+#portfolio_banner {
+  display: block;
+  position: absolute;
+  top: 50px; /* Adjust position to avoid overlapping */
+  right: 10px;
+  z-index: 10;
+  padding: 10px 50px 10px 10px;
+  color: #fff;
+  background: url('../images/blacktocat.png') #ff9900 no-repeat 95% 50%; /* Change color to differentiate */
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(0,0,0,.5);
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+#portfolio_banner:hover {
+  background-color: #e68a00; /* Darker orange on hover */
+}
